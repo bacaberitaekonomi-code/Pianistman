@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PianistMan — Belajar Piano dari Nol</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--fg:#fff;--card:#121212;--mut:#a1a1aa;--line:#2a2a2e;--ac:#8b5cf6;--ac2:#a78bfa;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#000;--card:#f4f4f5;--mut:#52525b;--line:#d4d4d8;--ac:#7c3aed;--ac2:#6d28d9;color-scheme:light}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.bar{max-width:1080px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:16px}
+.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer}
+.logo i{display:inline-flex;gap:2px}.logo i b{width:6px;height:20px;background:var(--fg);border-radius:0 0 2px 2px}.logo i b:nth-child(2){background:var(--ac);height:13px}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav button{background:none;border:0;color:var(--mut);font:inherit;font-size:14px;padding:6px 10px;border-radius:99px;cursor:pointer;white-space:nowrap}
+nav button.on,nav button:hover{color:var(--fg);background:var(--card)}
+nav button.on{box-shadow:inset 0 0 0 1px var(--ac)}
+main{max-width:1080px;margin:auto;padding:0 16px 48px}
+.view{display:none;padding-top:28px}.view.show{display:block}
+h1{font-size:clamp(34px,8vw,64px);line-height:1.05;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:26px;margin:36px 0 12px;font-weight:800}h3{margin:0 0 6px;font-size:18px}
+p{margin:0 0 12px}.mut{color:var(--mut)}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:99px;padding:11px 20px;font:inherit;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
+.btn:hover{filter:brightness(1.12)}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;color:inherit;font:inherit}
+button.card{cursor:pointer}button.card:hover{border-color:var(--ac)}
+.chip{background:var(--card);border:1px solid var(--line);color:var(--fg);border-radius:99px;padding:6px 14px;font:inherit;cursor:pointer}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+select,input[type=text],input[type=search]{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit}
+.kbw{overflow-x:auto;padding:4px 0 8px;touch-action:pan-x}
+.kb{position:relative;display:flex;height:150px;user-select:none;touch-action:manipulation}
+.w{flex:1;background:#fafafa;border:1px solid #9ca3af;border-radius:0 0 7px 7px;position:relative;color:#52525b;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:6px;cursor:pointer}
+.b{position:absolute;top:0;height:60%;background:#111;border-radius:0 0 5px 5px;z-index:2;color:#d4d4d8;font-size:9px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;cursor:pointer}
+.w.on,.b.on{background:var(--ac);color:#fff}
+.w.root{box-shadow:inset 0 -6px 0 #fff}
+.f{font-weight:800;font-size:13px}
+.hero{padding:24px 0 8px}.hero p{font-size:18px;max-width:520px}
+.tag{font-size:13px;color:var(--ac2)}
+.prog{height:8px;background:var(--line);border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ac);transition:width .4s}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+label.l{display:flex;gap:10px;padding:6px 0;cursor:pointer;align-items:flex-start}
+.pc{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.pc .card{padding:10px 14px;min-width:70px;text-align:center}
+.pc .card.cur{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;color:var(--mut);font-size:14px}
+.err{color:#f87171}.ok{color:#4ade80}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="bar"><div class="logo" data-v="beranda"><i><b></b><b></b><b></b></i>PianistMan</div>
+<nav id="nav"></nav></div></header>
+<main>
+
+<section class="view" id="v-beranda">
+ <div class="hero"><h1>Mulai Perjalanan Musikmu</h1>
+ <p class="mut">Belajar piano dari nol sampai mahir, satu nada setiap hari.</p>
+ <div class="row"><button class="btn" data-v="belajar">Mulai Belajar</button><button class="btn ghost" data-v="chord">Jelajahi Chord</button></div></div>
+ <p class="tag">Coba sekarang: sentuh tuts di bawah untuk mendengar suaranya.</p>
+ <div class="kbw"><div class="kb" id="kbHero"></div></div>
+ <h2>Kategori populer</h2>
+ <div class="grid">
+  <button class="card" data-v="belajar"><h3>Dasar Piano</h3><span class="mut">Tuts, nama nada, posisi tangan.</span></button>
+  <button class="card" data-v="chord"><h3>Chord</h3><span class="mut">204 chord di 12 nada dasar.</span></button>
+  <button class="card" data-v="tangga"><h3>Tangga Nada</h3><span class="mut">Mayor, minor, pentatonik.</span></button>
+  <button class="card" data-v="latihan"><h3>Latihan</h3><span class="mut">Tebak nada dan dengarkan.</span></button>
+ </div>
+ <h2>Chord yang sering dipakai</h2>
+ <div class="row" id="hot"></div>
+ <h2>Lagu pilihan untuk pemula</h2>
+ <div class="grid" id="songsHome"></div>
+ <h2>Progres belajar</h2>
+ <div class="card"><div class="row" style="justify-content:space-between"><b id="pgTxt"></b><span class="mut">Disimpan di perangkat ini saja</span></div><div class="prog" style="margin-top:10px"><i id="pgBar"></i></div></div>
+</section>
+
+<section class="view" id="v-belajar"><h1>Belajar Piano</h1>
+ <p class="mut">Ikuti jalur dari Level 1 sampai 4. Centang topik yang sudah kamu kuasai.</p><div id="levels"></div></section>
+
+<section class="view" id="v-chord"><h1>Chord</h1>
+ <p class="mut">Cari chord apa pun, lihat nada penyusunnya, posisi jari, dan dengarkan suaranya.</p>
+ <div class="row"><input type="search" id="q" placeholder="Cari, mis. Am7 atau Fsus4" aria-label="Cari chord">
+ <select id="selRoot" aria-label="Nada dasar"></select><select id="selCat" aria-label="Kategori"></select></div>
+ <div class="grid" id="chordList" style="margin-top:14px"></div>
+ <div id="detail" class="card" style="margin-top:16px;display:none"></div>
+ <h2>Pembuat progresi chord</h2>
+ <div class="row"><select id="gKey" aria-label="Key"></select>
+ <button class="chip" id="gDn" aria-label="Turunkan setengah nada">− Transpose</button><button class="chip" id="gUp" aria-label="Naikkan setengah nada">Transpose +</button>
+ <select id="gGen" aria-label="Genre"><option>pop</option><option>ballad</option><option>jazz</option><option>blues</option><option>worship</option><option>cinematic</option></select>
+ <select id="gLvl" aria-label="Tingkat kesulitan"><option value="1">Mudah</option><option value="2">Menengah</option><option value="3">Mahir</option></select>
+ <label class="mut">BPM <input type="number" id="gBpm" value="80" min="40" max="200" style="width:70px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:8px"></label></div>
+ <p style="margin-top:12px"><b id="gRn"></b></p><div class="pc" id="gCards"></div>
+ <div class="row"><button class="btn" id="gPlay">Putar</button><button class="btn ghost" id="gStop">Berhenti</button><button class="btn ghost" id="gNext">Variasi lain</button></div>
+ <div class="kbw"><div class="kb" id="gKb"></div></div>
+</section>
+
+<section class="view" id="v-tangga"><h1>Tangga Nada</h1>
+ <div class="row"><select id="sRoot" aria-label="Nada dasar"></select><select id="sType" aria-label="Jenis"></select>
+ <button class="btn" id="sPlay">Putar tangga nada</button></div>
+ <p style="margin-top:12px"><b id="sNotes"></b></p>
+ <div class="kbw"><div class="kb" id="sKb"></div></div>
+ <h2>Keyboard bebas</h2>
+ <p class="mut">Mouse, sentuhan, atau tombol komputer: A W S E D F T G Y H U J K.</p>
+ <div class="row"><label class="mut">Oktaf <select id="oct"><option>2</option><option>3</option><option selected>4</option><option>5</option></select></label></div>
+ <div class="kbw"><div class="kb" id="freeKb"></div></div></section>
+
+<section class="view" id="v-lagu"><h1>Lagu</h1>
+ <p class="mut">Lagu latihan original PianistMan. Pilih satu, pelajari chord-nya, lalu transpose ke nada yang nyaman untukmu.</p>
+ <div class="row"><select id="fLv" aria-label="Tingkat"><option value="all">Semua tingkat</option><option value="1">Pemula</option><option value="2">Menengah</option><option value="3">Mahir</option></select>
+ <select id="fGen" aria-label="Genre"><option value="all">Semua genre</option><option>pop</option><option>ballad</option><option>jazz</option><option>blues</option><option>worship</option><option>cinematic</option></select>
+ <select id="fKey" aria-label="Nada dasar"></select></div>
+ <div class="grid" id="songList" style="margin-top:14px"></div>
+ <div id="songDetail" class="card" style="margin-top:16px;display:none"></div></section>
+
+<section class="view" id="v-latihan"><h1>Latihan</h1>
+ <div class="card"><h3>Tebak nama nada</h3><p class="mut">Dengarkan nada, lalu pilih namanya.</p>
+ <div class="row"><button class="btn" id="gmPlay">Putar nada</button><span>Skor: <b id="gmSc">0/0</b></span></div>
+ <div class="row" id="gmBtns" style="margin:12px 0"></div><p id="gmFb" class="mut" aria-live="polite">Tekan “Putar nada” untuk mulai.</p></div>
+ <p class="mut" style="margin-top:14px">Tebak chord, interval, dan latihan ritme akan menyusul.</p></section>
+
+<section class="view" id="v-akun"><h1>Akun</h1>
+ <div class="card" id="accBox"><p class="mut">Memeriksa status akun…</p></div>
+ <p class="mut" style="margin-top:12px">Yang disimpan ke akun: topik kurikulum yang selesai dan status lagu. Chord favorit, target harian, dan riwayat skor belum tersedia.</p></section>
+
+<section class="view" id="v-tentang"><h1>Tentang</h1>
+ <p>PianistMan adalah platform belajar piano berbahasa Indonesia untuk pemula sampai mahir. Data nada chord dan tangga nada dihitung dari teori musik, lengkap dengan ejaan kres dan mol yang benar.</p>
+ <div class="card"><h3>Status versi ini</h3><p class="mut">Sudah berfungsi: kurikulum dan progres, perpustakaan chord, keyboard bersuara, pembuat progresi, tangga nada, satu latihan. Katalog lagu berisi lagu latihan original. Belum ada: latihan lainnya. Pengguna yang masuk dengan akun Claude juga mendapat penyimpanan progres ke akun; selain itu progres hanya di browser perangkat ini.</p></div></section>
+</main>
+<footer>PianistMan · Belajar piano satu nada setiap hari</footer>
+
+<script>
+const $=s=>document.querySelector(s),L='CDEFGAB',NP=[0,2,4,5,7,9,11];
+const ROOTS=[['C',0],['Db',1],['D',2],['Eb',3],['E',4],['F',5],['F#',6],['G',7],['Ab',8],['A',9],['Bb',10],['B',11]].map(([n,p])=>({n,p}));
+const NN=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+function spell(r,s,d){const li=(L.indexOf(r.n[0])+d-1)%7,pc=(r.p+s)%12,a=((pc-NP[li]+18)%12)-6;return L[li]+(a>0?'#'.repeat(a):a<0?'b'.repeat(-a):'')}
+function ivl(s,d){const b=NP[(d-1)%7]+(d>7?12:0),x=s-b;return(x<0?'b':x>0?'#':'')+d}
+const T=[['','Mayor','0:1 4:3 7:5','Terdengar cerah dan stabil. Sering menjadi “rumah” (I) atau penguat (IV dan V).','Major'],
+['m','Minor','0:1 3:3 7:5','Terdengar sendu dan lembut. Sering muncul di tingkat ii, iii, dan vi.','Minor'],
+['dim','Diminished','0:1 3:3 6:5','Tegang dan ingin bergerak. Dipakai sebagai chord peralihan.','Diminished dan augmented'],
+['aug','Augmented','0:1 4:3 8:5','Mengambang dan penuh tanya. Dipakai untuk membangun ketegangan.','Diminished dan augmented'],
+['sus2','Sus2','0:1 2:2 7:5','Terbuka dan menggantung karena tidak punya nada ketiga.','Sus'],
+['sus4','Sus4','0:1 5:4 7:5','Menggantung dan ingin “turun” ke chord mayor.','Sus'],
+['7','Dominant 7','0:1 4:3 7:5 10:7','Kuat menarik kembali ke chord I. Dasar dari blues.','Seventh'],
+['maj7','Major 7','0:1 4:3 7:5 11:7','Lembut dan mewah. Cocok untuk I dan IV.','Seventh'],
+['m7','Minor 7','0:1 3:3 7:5 10:7','Hangat dan santai. Favorit di jazz dan pop.','Seventh'],
+['m7b5','Half-diminished','0:1 3:3 6:5 10:7','Dipakai pada tingkat ii di kunci minor.','Seventh'],
+['dim7','Diminished 7','0:1 3:3 6:5 9:7','Sangat tegang, simetris, sering jadi chord lewat.','Seventh'],
+['add9','Add9','0:1 4:3 7:5 14:9','Triad dengan warna manis. Populer di pop dan worship.','Extended'],
+['maj9','Major 9','0:1 4:3 7:5 11:7 14:9','Mewah dan luas. Cocok untuk ballad.','Extended'],
+['m9','Minor 9','0:1 3:3 7:5 10:7 14:9','Lembut dan dalam. Terdengar di R&B dan jazz.','Extended'],
+['9','Dominant 9','0:1 4:3 7:5 10:7 14:9','Dominan yang lebih kaya. Terdengar di funk dan blues.','Extended'],
+['11','Dominant 11','0:1 4:3 7:5 10:7 14:9 17:11','Gantung dan modern. Sering dimainkan tanpa nada ketiga.','Extended'],
+['13','Dominant 13','0:1 4:3 7:5 10:7 14:9 21:13','Dominan paling penuh. Khas jazz dan big band.','Extended']
+].map(([s,l,i,f,c])=>({s,l,f,c,iv:i.split(' ').map(x=>x.split(':').map(Number))}));
+function info(r,t,inv=0){const names=t.iv.map(([s,d])=>spell(r,s,d));const m=t.iv.map(([s])=>48+r.p+s);for(let i=0;i<inv;i++)m[i]+=12;
+ return{r,t,inv,names,m,name:r.n+t.s+(inv?'/'+names[inv]:'')}}
+// audio
+let ctx;function AC(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();return ctx}
+function tone(m,at=0,d=1.6,v=.3){const c=AC(),t=c.currentTime+at,f=440*2**((m-69)/12);
+ [[f,'triangle',1],[f*2,'sine',.35],[f*3,'sine',.12]].forEach(([fr,ty,k])=>{const o=c.createOscillator(),g=c.createGain();o.type=ty;o.frequency.value=fr;
+ g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v*k,t+.01);g.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(g).connect(c.destination);o.start(t);o.stop(t+d+.05)})}
+function chordSound(ms,at=0,d=1.6){const v=.5/Math.sqrt(ms.length);ms.forEach(m=>tone(m,at,d,v))}
+// keyboard
+function kb(el,lo,hi,o={}){const whites=[];for(let m=lo;m<=hi;m++)if(![1,3,6,8,10].includes(m%12))whites.push(m);const n=whites.length;el.style.minWidth=n*34+'px';let h='';let wi=0;
+ for(let m=lo;m<=hi;m++){const bl=[1,3,6,8,10].includes(m%12),on=o.hl&&o.hl(m),rt=o.root!=null&&m%12===o.root,f=o.fing&&o.fing[m],lab=o.label!==false?(bl?NN[m%12]:NN[m%12]+(m%12===0?Math.floor(m/12)-1:'')):'';
+  if(bl)h+=`<div class="b${on?' on':''}" data-m="${m}" style="left:${(wi*100/n)-30/n}%;width:${60/n}%">${on&&f?'':lab}${on&&f?`<span class="f">${f}</span>`:''}</div>`;
+  else{h+=`<div class="w${on?' on':''}${on&&rt?' root':''}" data-m="${m}">${on&&f?`<span class="f">${f}</span>`:''}${lab}</div>`;wi++}}
+ el.innerHTML=h;el.style.setProperty('--n',n);
+ if(o.play)el.onpointerdown=e=>{const k=e.target.closest('[data-m]');if(!k)return;tone(+k.dataset.m);k.style.filter='brightness(.8)';setTimeout(()=>k.style.filter='',160)}}
+// nav
+const V=[['beranda','Beranda'],['belajar','Belajar Piano'],['chord','Chord'],['tangga','Tangga Nada'],['lagu','Lagu'],['latihan','Latihan'],['tentang','Tentang'],['akun','Akun']];
+$('#nav').innerHTML=V.map(v=>`<button data-v="${v[0]}">${v[1]}</button>`).join('');
+function go(v){if(!V.some(x=>x[0]===v))v='beranda';document.querySelectorAll('.view').forEach(s=>s.classList.toggle('show',s.id==='v-'+v));
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));try{history.replaceState(null,'','#'+v)}catch(e){}scrollTo(0,0)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)go(b.dataset.v)});
+// progress
+const LV=[['Level 1 — Pemula',['Mengenal keyboard piano dan 88 tuts','Mengenal nada C, D, E, F, G, A, B','Mengenal nada kres (#) dan mol (b)','Posisi duduk dan posisi tangan','Penomoran jari tangan kanan dan kiri','Latihan koordinasi jari','Ritme dasar dan ketukan','Tangga nada C mayor','Membaca notasi dasar']],
+['Level 2 — Dasar Chord',['Pengertian chord dan interval','Chord mayor dan minor','Chord triad','Chord progression','Inversi chord','Mengiringi lagu sederhana','Pola iringan tangan kiri dan kanan']],
+['Level 3 — Menengah',['Semua tangga nada mayor dan minor','Circle of Fifths','Chord seventh','Chord sus2 dan sus4','Chord diminished dan augmented','Arpeggio','Pedal piano','Teknik mengiringi lagu','Pola pop, ballad, dan worship','Transpose lagu ke berbagai nada dasar']],
+['Level 4 — Mahir',['Chord extended: maj9, m9, 11, 13','Dominant seventh dan altered chords','Passing chords','Slash chords dan inversi lanjutan','Harmoni dan voice leading','Improvisasi','Fingerstyle piano','Reharmonisasi lagu','Membuat aransemen sendiri','Komposisi dan teori musik lanjutan']]];
+let done=[];try{done=JSON.parse(localStorage.getItem('pv_done')||'[]')}catch(e){}
+function pg(){const tot=LV.reduce((a,l)=>a+l[1].length,0);$('#pgTxt').textContent=done.length+' dari '+tot+' topik selesai';$('#pgBar').style.width=done.length*100/tot+'%'}
+$('#levels').innerHTML=LV.map((l,i)=>`<details ${i===0?'open':''}><summary>${l[0]}</summary>${l[1].map((t,j)=>`<label class="l"><input type="checkbox" data-k="${i}.${j}" ${done.includes(i+'.'+j)?'checked':''}> ${t}</label>`).join('')}</details>`).join('');
+$('#levels').onchange=e=>{const k=e.target.dataset.k;done=e.target.checked?[...new Set([...done,k])]:done.filter(x=>x!==k);try{localStorage.setItem('pv_done',JSON.stringify(done))}catch(x){}pg()};pg();
+// home
+kb($('#kbHero'),60,83,{play:1});
+const C=ROOTS[0];$('#hot').innerHTML=[[0,0],[7,0],[9,1],[5,0]].map(([p,t])=>{const r=ROOTS.find(x=>x.p===p);const c=info(r,T[t]);return `<button class="chip" data-s="${r.n}|${T[t].s}">${c.name} <span class="mut">▶</span></button>`}).join('');
+$('#hot').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;const[r,s]=b.dataset.s.split('|');chordSound(info(ROOTS.find(x=>x.n===r),T.find(t=>t.s===s)).m)};
+$('#songsHome').innerHTML=[['Pola Pop Klasik','I–V–vi–IV di C: C, G, Am, F'],['Ballad Lembut','I–iii–IV–V di G: G, Bm, C, D'],['Doa Pagi (latihan)','I–IV–V di D: D, G, A']].map(s=>`<div class="card"><h3>${s[0]}</h3><span class="mut">${s[1]}</span><p class="mut" style="margin-top:8px;font-size:14px">Pola original untuk latihan.</p></div>`).join('');
+// chord library
+$('#selRoot').innerHTML='<option value="all">Semua nada dasar</option>'+ROOTS.map(r=>`<option>${r.n}</option>`).join('');$('#selRoot').value='C';
+const cats=[...new Set(T.map(t=>t.c))];$('#selCat').innerHTML='<option value="all">Semua kategori</option>'+cats.map(c=>`<option>${c}</option>`).join('');
+let cur=null;
+function list(){const q=$('#q').value.trim().toLowerCase().replace(/\s/g,''),rt=$('#selRoot').value,ct=$('#selCat').value;let out=[];
+ ROOTS.forEach(r=>{if(rt!=='all'&&r.n!==rt)return;T.forEach(t=>{if(ct!=='all'&&t.c!==ct)return;const nm=r.n+t.s;if(q&&!nm.toLowerCase().startsWith(q)&&!nm.toLowerCase().includes(q))return;out.push([r,t])})});
+ const box=$('#chordList');if(!out.length){box.innerHTML='<p class="err">Chord tidak ditemukan. Coba tulis seperti “Am7”, “F#m” atau “Bbmaj7”.</p>';return}
+ box.innerHTML=out.slice(0,60).map(([r,t])=>{const c=info(r,t);return `<button class="card" data-r="${r.n}" data-t="${t.s}"><h3>${c.name}</h3><span class="mut">${c.names.join(' · ')}</span></button>`}).join('')+(out.length>60?`<p class="mut">Menampilkan 60 dari ${out.length}. Persempit pencarianmu.</p>`:'')}
+['#q','#selRoot','#selCat'].forEach(s=>$(s).addEventListener('input',list));list();
+$('#chordList').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;show(ROOTS.find(r=>r.n===b.dataset.r),T.find(t=>t.s===b.dataset.t),0)};
+function fingers(c){const s=[...c.m].sort((a,b)=>a-b),n=s.length,f=n===3?[1,3,5]:n===4?[1,2,3,5]:[1,2,3,4,5].slice(0,n),o={};s.forEach((m,i)=>o[m]=f[Math.min(i,f.length-1)]);return o}
+function show(r,t,inv){cur={r,t,inv};const c=info(r,t,inv),minor=t.s.startsWith('m')&&!t.s.startsWith('maj'),R=ROOTS,mj=(s,d)=>spell(r,s,d);
+ const ex=minor?`i–VI–III–VII: ${r.n}m, ${mj(8,6)}, ${mj(3,3)}, ${mj(10,7)}`:`I–V–vi–IV: ${r.n}, ${mj(7,5)}, ${mj(9,6)}m, ${mj(5,4)}`;
+ const rel=[];if(t.s==='')rel.push([ROOTS.find(x=>x.p===(r.p+9)%12),'m'],[ROOTS.find(x=>x.p===(r.p+7)%12),''],[ROOTS.find(x=>x.p===(r.p+5)%12),'']);
+ else if(t.s==='m')rel.push([ROOTS.find(x=>x.p===(r.p+3)%12),''],[ROOTS.find(x=>x.p===(r.p+5)%12),'m']);
+ else if(t.s==='7')rel.push([ROOTS.find(x=>x.p===(r.p+6)%12),'7']);else rel.push([r,'']);
+ const mx=Math.max(...c.m),hi=Math.max(72,Math.ceil((mx+1)/12)*12),d=$('#detail');d.style.display='block';
+ d.innerHTML=`<div class="row" style="justify-content:space-between"><h2 style="margin:0">${c.name}</h2><span class="mut">${t.l}</span></div>
+ <p class="mut">${t.f}</p><p><b>Rumus:</b> ${t.iv.map(([s,dg])=>ivl(s,dg)).join(' – ')}<br><b>Nada:</b> ${c.names.join(' – ')}</p>
+ <div class="row">${t.iv.map((_,i)=>`<button class="chip ${i===inv?'on':''}" data-i="${i}">${i?'Inversi '+i:'Posisi akar'}</button>`).join('')}</div>
+ <div class="kbw"><div class="kb" id="dKb"></div></div>
+ <p class="mut" style="margin:0">Tangan kanan: angka pada tuts adalah nomor jari (1 = ibu jari). Tangan kiri: mainkan ${c.names[inv]} dengan jari 5 dan ${spell(r,7,5)} dengan jari 1 satu oktaf di bawah.</p>
+ <div class="row" style="margin:12px 0"><button class="btn" id="dPlay">Putar chord</button><button class="btn ghost" id="dArp">Putar arpeggio</button></div>
+ <p><b>Contoh progresi:</b> ${ex}</p>
+ <p><b>Chord terkait / pengganti:</b> ${rel.map(([x,s])=>x.n+s).join(', ')}</p>`;
+ kb($('#dKb'),48,hi,{hl:m=>c.m.includes(m),root:r.p,fing:fingers(c),play:1});
+ $('#dPlay').onclick=()=>chordSound(c.m);$('#dArp').onclick=()=>[...c.m].sort((a,b)=>a-b).forEach((m,i)=>tone(m,i*.28,1.4,.3));
+ d.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>show(r,t,+b.dataset.i));d.scrollIntoView({behavior:'smooth',block:'nearest'});chordSound(c.m)}
+// progression generator
+const MAJ=[0,2,4,5,7,9,11],POOL={pop:[[0,4,5,3],[5,3,0,4],[0,5,3,4]],ballad:[[0,2,3,4],[0,3,5,4],[0,5,1,4]],jazz:[[1,4,0,0],[0,5,1,4],[2,5,1,4]],blues:[[0,0,3,0],[0,3,0,4],[0,3,0,4]],worship:[[0,4,5,3],[3,0,4,5],[0,3,5,4]],cinematic:[[5,3,0,4],[5,2,3,4],[3,0,5,4]]};
+const RN=['I','ii','iii','IV','V','vi','vii°'];let gi=0,gk=0,timer=[],gc=[],gx=-1;
+$('#gKey').innerHTML=ROOTS.map((r,i)=>`<option value="${i}">${r.n} mayor</option>`).join('');
+function gtype(d,g,l){if(g==='blues')return T.find(t=>t.s===(l>=3?'9':'7'));if(g==='jazz')l=Math.max(l,2);const q={0:['','maj7','maj9'],3:['','maj7','maj9'],1:['m','m7','m9'],2:['m','m7','m9'],5:['m','m7','m9'],4:['','7','9'],6:['dim','m7b5','m7b5']}[d][l-1];return T.find(t=>t.s===q)}
+function gen(){const k=ROOTS[gk],g=$('#gGen').value,l=+$('#gLvl').value,p=POOL[g][gi%POOL[g].length];$('#gKey').value=gk;
+ gc=p.map(d=>{const r={n:spell(k,MAJ[d],d+1),p:(k.p+MAJ[d])%12};return info(r,gtype(d,g,l))});
+ $('#gRn').textContent=p.map(d=>g==='blues'?RN[d].toUpperCase():RN[d]).join(' – ')+'  ·  variasi '+(gi%POOL[g].length+1)+' dari '+POOL[g].length;
+ $('#gCards').innerHTML=gc.map((c,i)=>`<button class="card" data-g="${i}"><b>${c.name}</b><br><span class="mut" style="font-size:12px">${c.names.join(' ')}</span></button>`).join('');pick(0,false)}
+function pick(i,snd=true){gx=i;const c=gc[i];document.querySelectorAll('#gCards .card').forEach((e,j)=>e.classList.toggle('cur',j===i));
+ const mx=Math.max(...c.m);kb($('#gKb'),48,Math.max(72,Math.ceil((mx+1)/12)*12),{hl:m=>c.m.includes(m),root:c.r.p,play:1});if(snd)chordSound(c.m)}
+$('#gCards').onclick=e=>{const b=e.target.closest('[data-g]');if(b)pick(+b.dataset.g)};
+$('#gKey').onchange=e=>{gk=+e.target.value;gen()};['#gGen','#gLvl'].forEach(s=>$(s).onchange=()=>{gi=0;gen()});
+$('#gUp').onclick=()=>{gk=(gk+1)%12;gen()};$('#gDn').onclick=()=>{gk=(gk+11)%12;gen()};$('#gNext').onclick=()=>{gi++;gen()};
+function stop(){timer.forEach(clearTimeout);timer=[]}
+$('#gStop').onclick=stop;
+$('#gPlay').onclick=()=>{stop();let bpm=+$('#gBpm').value;if(!(bpm>=40&&bpm<=200)){bpm=80;$('#gBpm').value=80}const beat=60000/bpm*2;
+ gc.forEach((c,i)=>timer.push(setTimeout(()=>{pick(i,false);chordSound(c.m,0,beat/1000)},i*beat)))};gen();
+// scales
+const SC=[['Mayor',[0,2,4,5,7,9,11],[1,2,3,4,5,6,7]],['Minor natural',[0,2,3,5,7,8,10],[1,2,3,4,5,6,7]],['Minor harmonik',[0,2,3,5,7,8,11],[1,2,3,4,5,6,7]],['Pentatonik mayor',[0,2,4,7,9],[1,2,3,5,6]]];
+$('#sRoot').innerHTML=ROOTS.map((r,i)=>`<option value="${i}">${r.n}</option>`).join('');$('#sType').innerHTML=SC.map((s,i)=>`<option value="${i}">${s[0]}</option>`).join('');
+let sc=[];function scale(){const r=ROOTS[+$('#sRoot').value],t=SC[+$('#sType').value];const names=t[1].map((s,i)=>spell(r,s,t[2][i]));$('#sNotes').textContent=names.join(' – ')+' – '+r.n;
+ const pcs=t[1].map(s=>(r.p+s)%12);sc=[...t[1],12].map(s=>60+r.p+s);kb($('#sKb'),60,84,{hl:m=>pcs.includes(m%12),root:r.p,play:1})}
+$('#sRoot').onchange=$('#sType').onchange=scale;$('#sPlay').onclick=()=>sc.forEach((m,i)=>tone(m,i*.4,.9,.3));scale();
+function free(){const b=12*(+$('#oct').value+1);kb($('#freeKb'),b,b+24,{play:1})}$('#oct').onchange=free;free();
+const KM='awsedftgyhujk';let held={};
+addEventListener('keydown',e=>{if(e.repeat||e.ctrlKey||e.metaKey||/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;const i=KM.indexOf(e.key.toLowerCase());if(i<0)return;
+ const m=12*(+$('#oct').value+1)+i;tone(m);const k=$('#freeKb [data-m="'+m+'"]');if(k){k.classList.add('on');setTimeout(()=>k.classList.remove('on'),180)}});
+// game
+let gn=null,s1=0,s2=0;$('#gmBtns').innerHTML=[...L].map(x=>`<button class="chip" data-n="${x}">${x}</button>`).join('');
+$('#gmPlay').onclick=()=>{const i=Math.floor(Math.random()*7);gn=i;tone(60+NP[i]+(Math.random()<.5?12:0)*0,1.5);$('#gmFb').textContent='Nada apa yang kamu dengar?';$('#gmFb').className='mut'};
+$('#gmBtns').onclick=e=>{const b=e.target.closest('[data-n]');if(!b)return;if(gn===null){$('#gmFb').textContent='Tekan “Putar nada” dulu.';return}
+ s2++;const ok=b.dataset.n===L[gn];if(ok)s1++;$('#gmSc').textContent=s1+'/'+s2;const f=$('#gmFb');f.className=ok?'ok':'err';
+ f.textContent=ok?'Benar! Itu nada '+L[gn]+'.':'Belum tepat. Itu nada '+L[gn]+(gn?', '+gn+' tuts putih di kanan C.':', tuts putih tepat di kiri dua tuts hitam.');gn=null}
+// songs
+const SG=[
+{t:'Langkah Pertama',lv:1,g:'pop',k:0,bpm:80,p:[[0,''],[4,''],[5,'m'],[3,'']],pat:'Kiri: nada akar di ketukan 1. Kanan: chord utuh sekali per birama.'},
+{t:'Pagi di Jendela',lv:1,g:'ballad',k:7,bpm:68,p:[[0,''],[2,'m'],[3,''],[4,'']],pat:'Kiri: akar + kelima bersama. Kanan: chord utuh, tahan dua ketukan.'},
+{t:'Doa Sederhana',lv:1,g:'worship',k:2,bpm:72,p:[[0,''],[3,''],[4,''],[0,'']],pat:'Kiri: oktaf akar. Kanan: chord utuh dengan pedal tiap ganti chord.'},
+{t:'Hujan Jam Tiga',lv:2,g:'ballad',k:9,bpm:64,p:[[5,'m7'],[3,'maj7'],[0,'maj7'],[4,'7']],pat:'Kiri: akar lalu kelima. Kanan: arpeggio naik 1-3-5-7 (tiap ketukan satu nada).'},
+{t:'Lampu Kota',lv:2,g:'jazz',k:5,bpm:110,p:[[1,'m7'],[4,'7'],[0,'maj7'],[5,'m7']],pat:'Kiri: akar di ketukan 1. Kanan: chord pendek di ketukan 2 dan 4.'},
+{t:'Jalan Berdebu',lv:2,g:'blues',k:4,bpm:90,p:[[0,'7'],[3,'7'],[0,'7'],[4,'7']],pat:'Kiri: pola berjalan akar-3-5-6. Kanan: chord 7 pada ketukan 2 dan 4.'},
+{t:'Layar Terbuka',lv:3,g:'cinematic',k:10,bpm:70,p:[[5,'m9'],[3,'maj9'],[0,'add9'],[4,'sus4']],pat:'Kiri: oktaf akar dengan pedal panjang. Kanan: voicing terbuka, nada atas bergerak pelan.'},
+{t:'Fajar Biru',lv:3,g:'worship',k:3,bpm:76,p:[[0,'add9'],[4,''],[5,'m7'],[3,'maj7']],pat:'Kiri: akar + kelima, lalu oktaf. Kanan: chord utuh dengan nada atas dilodi.'}];
+const LVN={1:'Pemula',2:'Menengah',3:'Mahir'};let sd=[];try{sd=JSON.parse(localStorage.getItem('pv_songs')||'[]')}catch(e){}
+$('#fKey').innerHTML='<option value="all">Semua nada dasar</option>'+ROOTS.map(r=>`<option>${r.n}</option>`).join('');
+function songs(){const lv=$('#fLv').value,g=$('#fGen').value,k=$('#fKey').value;
+ const out=SG.map((s,i)=>[s,i]).filter(([s])=>(lv==='all'||s.lv==lv)&&(g==='all'||s.g===g)&&(k==='all'||ROOTS[s.k].n===k));
+ $('#songList').innerHTML=out.length?out.map(([s,i])=>`<button class="card" data-so="${i}"><h3>${s.t}</h3><span class="mut">PianistMan (original)<br>${LVN[s.lv]} · ${s.g} · ${ROOTS[s.k].n} · ${s.bpm} BPM</span><br><span class="${sd.includes(i)?'ok':'mut'}">${sd.includes(i)?'Selesai':'Belum dipelajari'}</span></button>`).join(''):'<p class="err">Tidak ada lagu dengan filter ini. Ubah salah satu pilihan.</p>'}
+['#fLv','#fGen','#fKey'].forEach(s=>$(s).onchange=songs);songs();
+let so=0,sk=0,sch=[];
+function sChords(){const s=SG[so],k=ROOTS[sk];return s.p.map(([d,q])=>info({n:spell(k,MAJ[d],d+1),p:(k.p+MAJ[d])%12},T.find(t=>t.s===q)))}
+function openSong(i,k){stop();so=i;sk=k;const s=SG[i];sch=sChords();const done=sd.includes(i);const d=$('#songDetail');d.style.display='block';
+ d.innerHTML=`<div class="row" style="justify-content:space-between"><h2 style="margin:0">${s.t}</h2><span class="mut">${LVN[s.lv]} · ${s.g}</span></div>
+ <p class="mut">Artis: PianistMan (original) · Key: <b>${ROOTS[sk].n}</b> (asli ${ROOTS[s.k].n}) · ${s.bpm} BPM</p>
+ <div class="row"><button class="chip" id="soDn">− Transpose</button><button class="chip" id="soUp">Transpose +</button></div>
+ <div class="pc" id="soCh">${sch.map((c,j)=>`<button class="card" data-j="${j}"><b>${c.name}</b><br><span class="mut" style="font-size:12px">${c.names.join(' ')}</span></button>`).join('')}</div>
+ <div class="kbw"><div class="kb" id="soKb"></div></div>
+ <div class="row" style="margin:10px 0"><button class="btn" id="soPlay">Putar</button><button class="btn ghost" id="soStop">Berhenti</button><button class="btn ghost" id="soDone">${done?'Tandai belum selesai':'Tandai selesai'}</button></div>
+ <p><b>Pola iringan:</b> ${s.pat}</p>
+ <p><b>Langkah belajar:</b></p><ol class="mut"><li>Mainkan tiap chord sendiri-sendiri sampai jarimu hafal posisinya.</li><li>Pindah antar chord pelan-pelan tanpa suara dulu.</li><li>Tambahkan pola iringan di atas.</li><li>Naikkan tempo sampai ${s.bpm} BPM.</li></ol>`;
+ sPick(0,false);
+ $('#soDn').onclick=()=>openSong(so,(sk+11)%12);$('#soUp').onclick=()=>openSong(so,(sk+1)%12);
+ $('#soStop').onclick=stop;
+ $('#soPlay').onclick=()=>{stop();const b=60000/s.bpm*2;sch.forEach((c,j)=>timer.push(setTimeout(()=>{sPick(j,false);chordSound(c.m,0,b/1000)},j*b)))};
+ $('#soDone').onclick=()=>{sd=sd.includes(i)?sd.filter(x=>x!==i):[...sd,i];try{localStorage.setItem('pv_songs',JSON.stringify(sd))}catch(e){}songs();openSong(so,sk)};
+ d.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function sPick(j,snd=true){const c=sch[j];document.querySelectorAll('#soCh .card').forEach((e,x)=>e.classList.toggle('cur',x===j));
+ kb($('#soKb'),48,Math.max(72,Math.ceil((Math.max(...c.m)+1)/12)*12),{hl:m=>c.m.includes(m),root:c.r.p,fing:fingers(c),play:1});if(snd)chordSound(c.m)}
+$('#songList').onclick=e=>{const b=e.target.closest('[data-so]');if(b)openSong(+b.dataset.so,SG[+b.dataset.so].k)};
+$('#songDetail').onclick=e=>{const b=e.target.closest('[data-j]');if(b)sPick(+b.dataset.j)};
+$('#songsHome').innerHTML=SG.map((s,i)=>[s,i]).filter(([s])=>s.lv===1).map(([s,i])=>`<button class="card" data-hs="${i}"><h3>${s.t}</h3><span class="mut">${ROOTS[s.k].n} mayor · ${s.bpm} BPM · ${s.g}</span><p style="margin:8px 0">${s.p.map(([d,q])=>spell(ROOTS[s.k],MAJ[d],d+1)+q).join(' – ')}</p><span class="tag">Buka pelajaran</span></button>`).join('');
+$('#songsHome').onclick=e=>{const b=e.target.closest('[data-hs]');if(!b)return;const i=+b.dataset.hs;go('lagu');openSong(i,SG[i].k)};
+// account
+const A={id:null,ref:null};
+function renderAcc(){$('#accBox').innerHTML=A.id?'<h3>Kamu sudah masuk</h3><p class="mut">Progres belajar dan status lagu disimpan ke akunmu dan dimuat otomatis di perangkat lain.</p><p class="ok">Tersinkron</p>':'<h3>Mode tamu</h3><p class="mut">Progresmu tersimpan hanya di browser perangkat ini dan bisa hilang kalau datanya dihapus.</p><p class="mut">Masuk memakai akun Claude. Pendaftaran dengan email dan kata sandi buatan sendiri tidak tersedia di halaman ini, dan penyimpanan ke akun hanya aktif untuk pengguna Claude yang membuka halaman ini saat sudah masuk.</p><button class="btn ghost" id="accRe">Periksa ulang status</button>';const b=$('#accRe');if(b)b.onclick=initAcc}
+async function initAcc(){A.id=null;A.ref=null;try{if(window.claude){const u=await claude.use('user'),d=await claude.use('db');if(u&&d){const id=await u.id();if(id){A.id=id;A.ref=d.collection('data/users/'+id).doc('progress');const s=await A.ref.get();if(s.exists){const x=s.data()||{};done=[...new Set([...done,...(Array.isArray(x.done)?x.done:[])])];sd=[...new Set([...sd,...(Array.isArray(x.sd)?x.sd:[])])];
+ document.querySelectorAll('#levels [data-k]').forEach(c=>c.checked=done.includes(c.dataset.k));pg();songs();try{localStorage.setItem('pv_done',JSON.stringify(done));localStorage.setItem('pv_songs',JSON.stringify(sd))}catch(e){}}}}}}catch(e){A.id=null;A.ref=null}renderAcc()}
+async function cloudSave(){if(!A.ref)return;try{await A.ref.set({done,sd,t:Date.now()})}catch(e){}}
+$('#levels').addEventListener('change',()=>setTimeout(cloudSave,50));
+document.addEventListener('click',e=>{if(e.target.closest('#soDone'))setTimeout(cloudSave,80)});
+renderAcc();initAcc();
+go(location.hash.slice(1));addEventListener('hashchange',()=>go(location.hash.slice(1)));
+</script></body></html>
